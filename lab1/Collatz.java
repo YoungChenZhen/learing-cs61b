@@ -16,7 +16,7 @@ public class Collatz {
     }
 
     public static void main(String[] args) {
-        int n = 75;
+        int n = 753;
         System.out.print(n + " ");
         while (n != 1) {
             n = nextNumber(n);
