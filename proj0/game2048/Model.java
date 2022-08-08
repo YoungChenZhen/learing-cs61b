@@ -186,7 +186,7 @@ public class Model extends Observable {
     /**
      * Returns true if any tile is equal to the maximum valid value.
      * Maximum valid value is given by MAX_PIECE. Note that
-     * given a Tile object t, we get its value with t.value().
+     * given a Tiles object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
