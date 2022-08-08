@@ -6,7 +6,7 @@ package game2048;
 public class Tile {
 
     /** A new tile with VALUE as its value at (ROW, COL).  This
-     *  constructor iss private, so all tiles are created by the
+     *  constructor is private, so all tiles are created by the
      *  factory methods create, move, and merge. */
     private Tile(int value, int col, int row) {
         this.value = value;
