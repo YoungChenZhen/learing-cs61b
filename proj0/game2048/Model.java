@@ -94,38 +94,32 @@ public class Model extends Observable {
         setChanged();
     }
 
-    public boolean f1(int col,int row)
-    {
-        boolean status=false;
-       if(row==this.size()-1)
-           return  status;
-       if(this.tile(col,row)!=null) {
-           if (this.tile(col, row + 1) == null) {
-               this.board.move(col, row + 1, this.tile(col, row));
-               status = true;
-           }
-          else if (this.tile(col, row).value() == this.tile(col, row + 1).value()) {
-               if (!this.tile(col,row+1).if_merged) {
-                   status = true;
-                   this.board.move(col, row + 1, this.tile(col, row));
-                   this.score += this.tile(col, row + 1).value();
-                   this.tile(col, row + 1).if_merged = true;
-               }
-           }
-       }
-       f1(col,row+1);
-       return status;
-    }
-
-
-    public boolean operate_col(int col){
-        boolean status=false;
-            for (int row = this.size() - 1; row >= 0; row--) {
-                if (f1(col, row))
-                    status = true;
+    private boolean moveColumn(Side side, int columnIdx){
+        int top = 3;
+        boolean isMove = false;
+        for (int i=2; i>=0; i--){
+            Tile currentTile = board.tile(columnIdx, i);
+            if (currentTile == null)
+                continue;
+            for(int j=top; j>i; j--){
+                Tile targetTile = board.tile(columnIdx, j);
+                if (targetTile == null) {
+                    board.move(columnIdx, j, currentTile);
+                    isMove = true;
+                    break;
+                }else if (currentTile.value() == targetTile.value()){
+                    score += currentTile.value() * 2;
+                    board.move(columnIdx, j, currentTile);
+                    top = j - 1;
+                    isMove = true;
+                    break;
+                }
             }
-        return status;
+        }
+        return isMove;
     }
+
+
     /** Tilt the board toward SIDE. Return true iff this changes the board.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -141,19 +135,20 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-        board.setViewingPerspective(side);
-            for(int col=0;col<this.size();col++){
-            if(operate_col(col))
-                changed=true;
-        }
+
+        // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        for(int i=0; i<4; i++){
+            if (moveColumn(side, i))
+                changed = true;
+        }
         board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
         }
-
         return changed;
     }
 
