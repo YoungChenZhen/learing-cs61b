@@ -30,3 +30,7 @@ public class ArithmeticTest {
         assertEquals(0, Arithmetic.sum(6, -6));
     }
 }
+    /** JUnit tests are short-circuiting – as soon as one of the asserts in a method fails, it will output the failure
+     * and move on to the next test.
+     */
+
