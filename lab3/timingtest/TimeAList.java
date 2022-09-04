@@ -33,12 +33,12 @@ public class TimeAList {
         while(counts<8){
             Stopwatch T=new Stopwatch();
             int callCounts=0;
-            for(int i=0;i<1000000;i++){
+            for(int i=0;i<N;i++){
                 L.addLast(i);
                 callCounts++;
             }
             opCounts.addLast(callCounts);
-            Ns.addLast(1000000);
+            Ns.addLast(N);
             times.addLast(T.elapsedTime());
             counts++;
             N=N*2;
