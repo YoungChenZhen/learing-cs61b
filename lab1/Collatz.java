@@ -6,7 +6,7 @@
 public class Collatz {
 
     /**
-     * Buggy implementation of nextNumber1111
+     * Buggy implementation of nextNumber1111216
      */
     public static int nextNumber(int n) {
         if (n % 2 == 0)
