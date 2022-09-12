@@ -7,7 +7,7 @@ package flik;
  */
 public class Flik {
     /**
-     * @param a Value 1
+     * @param a Value 1//
      * @param b Value 2
      * @return Whether a and b are the same
      */
