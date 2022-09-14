@@ -80,7 +80,7 @@ public class ArrayDequeTest {
     }
 
     public void testUsageRatio(ArrayDeque<String> AL) {
-        assertTrue("usage ratio should be greater than 0.25", AL.getUsage_ratio() > 0.25);
+        assertTrue("usage ratio should be greater than 0.25", AL.getUsageRatio() > 0.25);
     }
 
     @Test

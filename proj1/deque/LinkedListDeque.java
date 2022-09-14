@@ -1,9 +1,8 @@
 package deque;
 
-import java.lang.Iterable;
 import java.util.Iterator;
 
-public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
+public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     private final node sentinel;
     private int size;
@@ -16,7 +15,7 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
     }
 
     @Override
-    public void addFirst(Type i) {
+    public void addFirst(T i) {
         node first = new node(sentinel, i, sentinel.next);
         sentinel.next.prev = first;
         sentinel.next = first;
@@ -24,7 +23,7 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
     }
 
     @Override
-    public void addLast(Type i) {
+    public void addLast(T i) {
         node last = new node(sentinel.prev, i, sentinel);
         sentinel.prev.next = last;
         sentinel.prev = last;
@@ -37,7 +36,7 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
     }
 
     @Override
-    public Type removeFirst() {
+    public T removeFirst() {
         if (this.size() == 0)
             return null;
         node first = sentinel.next;
@@ -50,7 +49,7 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
     }
 
     @Override
-    public Type removeLast() {
+    public T removeLast() {
         if (this.size() == 0)
             return null;
         node last = sentinel.prev;
@@ -63,7 +62,7 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
     }
 
     @Override
-    public Type get(int index) {
+    public T get(int index) {
         if (index >= this.size() || index < 0)
             System.out.println("error");
         int mid = (1 + this.size()) / 2;
@@ -77,11 +76,11 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
         return p.item;
     }
 
-    public Type getFirst() {
+    public T getFirst() {
         return sentinel.next.item;
     }
 
-    public Type getLast() {
+    public T getLast() {
         return sentinel.prev.item;
     }
 
@@ -93,27 +92,27 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
         System.out.println();
     }
 
-    public Type getRecursive(int index) {
+    public T getRecursive(int index) {
         return getRecursiveHelper(index, 0, this.sentinel.next);
     }
 
-    private Type getRecursiveHelper(int index, int current, node p) {
+    private T getRecursiveHelper(int index, int current, node p) {
         if (current == index)
             return p.item;
         return getRecursiveHelper(index, current + 1, p.next);
     }
 
     @Override
-    public Iterator<Type> iterator() {
+    public Iterator<T> iterator() {
         return new LinkedListDequeIterator();
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof LinkedListDeque<?>))
+        if (!(o instanceof deque.Deque<?>))
             return false;
         if (this == o)
             return true;
-        LinkedListDeque<Type> other = (LinkedListDeque<Type>) o;
+        LinkedListDeque<T> other = (LinkedListDeque<T>) o;
         if (this.size() != other.size())
             return false;
         int i = 0;
@@ -126,17 +125,17 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
 
     private class node {
         public node prev;
-        public Type item;
+        public T item;
         public node next;
 
-        public node(node p, Type i, node n) {
+        public node(node p, T i, node n) {
             prev = p;
             item = i;
             next = n;
         }
     }
 
-    private class LinkedListDequeIterator implements Iterator<Type> {
+    private class LinkedListDequeIterator implements Iterator<T> {
 
         private int pos;
 
@@ -150,8 +149,8 @@ public class LinkedListDeque<Type> implements Iterable<Type>, Deque<Type> {
         }
 
         @Override
-        public Type next() {
-            Type temp = get(pos);
+        public T next() {
+            T temp = get(pos);
             pos++;
             return temp;
         }
