@@ -78,6 +78,45 @@ public class ArrayDequeTest {
         assertTrue("usage ratio should be greater than 0.25",AL.getUsage_ratio()>0.25);
     }
     @Test
+    public void testIterator(){
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        for (int i = 0; i < 100000; i++) {
+            lld1.addLast(i);
+        }
+
+        int i=0;
+        for(int x:lld1){
+            assertEquals(x,(int)lld1.get(i));
+            i++;
+        }
+    }
+
+    @Test
+    public void testEquals(){
+        ArrayDeque<Integer> IntL1=new ArrayDeque<>();
+        for(int i=0;i<1000;i++){
+            IntL1.addLast(i);
+        }
+
+        ArrayDeque<Integer> IntL2=IntL1;
+
+        ArrayDeque<Integer> IntL3=new ArrayDeque<>();
+        for(int i=0;i<1000;i++){
+            IntL1.addLast(i);
+        }
+        IntL3.removeLast();
+        IntL3.addLast(89);
+
+        ArrayDeque<String> StrL=new ArrayDeque<>();
+        for(Integer i=0;i<1000;i++){
+            StrL.addLast(i.toString());
+        }
+
+        assertTrue("IntL1 should equals to IntL2",IntL1.equals(IntL2));
+        assertFalse("IntL1 should not equals to IntL2",IntL1.equals(IntL3));
+        assertFalse("IntL1 should not equals to StrL",IntL1.equals(StrL));
+    }
+    @Test
     public void randomizedTest(){
         LinkedListDeque<String> LL=new LinkedListDeque<>();
         ArrayDeque<String> AL=new ArrayDeque<>();

@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<Type> {
+import java.util.Iterator;
+
+public class ArrayDeque<Type> implements Deque<Type>,Iterable<Type>{
 
     private Type []p;
     int size;
@@ -13,6 +15,7 @@ public class ArrayDeque<Type> {
         usage_ratio=1;
     }
 
+    @Override
     public void addFirst(Type x){
         if(firstIndex==0)
             this.resize();
@@ -20,6 +23,7 @@ public class ArrayDeque<Type> {
         firstIndex--;
         size++;
     }
+    @Override
     /** Inserts X into the back of the list. */
     public void addLast(Type x) {
         if(size==p.length-firstIndex) {
@@ -34,11 +38,13 @@ public class ArrayDeque<Type> {
         return p[size-1+firstIndex];
     }
     /** Gets the ith item in the list (0 is the front). */
+    @Override
     public Type get(int i) {
         return p[i+firstIndex];
     }
 
     /** Returns the number of items in the list. */
+    @Override
     public int size() {
         return size;
     }
@@ -49,6 +55,7 @@ public class ArrayDeque<Type> {
         return p[firstIndex];
     }
 
+    @Override
     public Type removeFirst(){
         if(size()==0)
             return null;
@@ -63,6 +70,7 @@ public class ArrayDeque<Type> {
     }
     /** Deletes item from back of the list and
      * returns deleted item. */
+    @Override
     public Type removeLast() {
         if(size()==0)
             return null;
@@ -94,13 +102,55 @@ public class ArrayDeque<Type> {
         p=a;
     }
 
-    public boolean isEmpty(){
-        return size()==0;
-    }
-
+    @Override
     public void printDeque(){
         for(int i=firstIndex;i< this.size()+firstIndex;i++){
             System.out.print(this.get(i)+"  ");
         }
+    }
+
+    private class ArrayDequeIterator implements Iterator<Type>{
+
+        private int pos;
+
+        public ArrayDequeIterator(){
+            pos=0;
+        }
+        @Override
+        public boolean hasNext() {
+            return pos<size();
+        }
+
+        @Override
+        public Type next() {
+            Type temp=get(pos);
+            pos++;
+            return temp;
+        }
+    }
+    /**
+     * Returns an iterator over elements of type {@code Type}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<Type> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    public boolean equals(Object o){
+        if(!(o instanceof ArrayDeque<?>))
+            return false;
+        if(this==o)
+            return true;
+        ArrayDeque<Type> other=(ArrayDeque<Type>) o;
+        if(this.size()!=other.size())
+            return false;
+        int i=0;
+        for(;i<this.size();i++){
+            if(this.get(i)!=other.get(i))
+                break;
+        }
+        return i==this.size();
     }
 }

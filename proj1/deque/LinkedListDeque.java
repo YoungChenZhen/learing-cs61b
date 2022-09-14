@@ -1,6 +1,12 @@
 package deque;
 
-public class LinkedListDeque<Type> {
+import org.junit.Test;
+
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
+
+public class LinkedListDeque<Type> implements Iterable<Type>,Deque<Type>{
+
     private class node{
         public node prev;
         public Type item;
@@ -32,6 +38,7 @@ public class LinkedListDeque<Type> {
     }
 
 
+    @Override
     public void addFirst(Type i){
         node first=new node(sentinel,i,sentinel.next);
         sentinel.next.prev=first;
@@ -39,7 +46,7 @@ public class LinkedListDeque<Type> {
         size++;
     }
 
-
+    @Override
     public void addLast(Type i){
         node last=new node(sentinel.prev,i,sentinel);
         sentinel.prev.next=last;
@@ -47,14 +54,12 @@ public class LinkedListDeque<Type> {
         size++;
     }
 
-    public boolean isEmpty(){
-        return(this.size==0);
-    }
-
+    @Override
     public int size(){
         return this.size;
     }
 
+    @Override
     public Type removeFirst(){
         if(this.size()==0)
             return null;
@@ -67,6 +72,7 @@ public class LinkedListDeque<Type> {
         return first.item;
     }
 
+    @Override
     public Type removeLast(){
         if(this.size()==0)
             return null;
@@ -79,6 +85,7 @@ public class LinkedListDeque<Type> {
        return last.item;
     }
 
+    @Override
     public Type get(int index) {
         if (index >= this.size() || index < 0)
             System.out.println("error");
@@ -93,6 +100,7 @@ public class LinkedListDeque<Type> {
         return p.item;
     }
 
+
     public Type getFirst(){
         return sentinel.next.item;
     }
@@ -100,6 +108,7 @@ public class LinkedListDeque<Type> {
     public Type getLast(){
         return sentinel.prev.item;
     }
+    @Override
     public void printDeque(){
         node p=sentinel.next;
         for(;p!=sentinel;p=p.next)
@@ -117,8 +126,45 @@ public class LinkedListDeque<Type> {
         return getRecursiveHelper(index,current+1,p.next);
     }
 
+    private class LinkedListDequeIterator implements Iterator<Type>{
+
+        private int pos;
+
+        public LinkedListDequeIterator(){
+            pos=0;
+        }
+        @Override
+        public boolean hasNext() {
+            return pos<size;
+        }
+
+        @Override
+        public Type next() {
+            Type temp=get(pos);
+            pos++;
+            return temp;
+        }
+    }
+
+    @Override
+    public Iterator<Type> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    public boolean equals(Object o){
+        if(!(o instanceof LinkedListDeque<?>))
+            return false;
+        if(this==o)
+            return true;
+        LinkedListDeque<Type> other=(LinkedListDeque<Type>) o;
+        if(this.size()!=other.size())
+            return false;
+        int i=0;
+        for(;i<this.size();i++){
+            if(this.get(i)!=other.get(i))
+                break;
+        }
+        return i==this.size();
+    }
 }
-
-
-
 
