@@ -76,11 +76,11 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return p.item;
     }
 
-    public T getFirst() {
+    private T getFirst() {
         return sentinel.next.item;
     }
 
-    public T getLast() {
+    private T getLast() {
         return sentinel.prev.item;
     }
 
@@ -112,7 +112,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         if (this == o)
             return true;
-        LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+        Deque<T> other = (Deque<T>) o;
         if (this.size() != other.size())
             return false;
         int i = 0;

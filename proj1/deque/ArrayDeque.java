@@ -39,7 +39,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     /**
      * Returns the item from the back of the list.
      */
-    public T getLast() {
+    private T getLast() {
         return p[size - 1 + firstIndex];
     }
 
@@ -59,7 +59,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
-    public T getFirst() {
+    private T getFirst() {
         if (size() == 0) {
             return null;
         }
@@ -100,11 +100,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         p[firstIndex + size - 1] = null;   //if the stored stuff is big,then we set its reference to null,so we can save memory
         size--;
         return temp;
-    }
-
-    public double getUsageRatio() {
-        usage_Ratio = (double) size() / p.length;
-        return usage_Ratio;
     }
 
     private void resize() {
@@ -150,7 +145,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (this == o) {
             return true;
         }
-        ArrayDeque<T> other = (ArrayDeque<T>) o;
+        Deque<T> other = (Deque<T>) o;
         if (this.size() != other.size()) {
             return false;
         }
