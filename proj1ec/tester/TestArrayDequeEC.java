@@ -40,7 +40,7 @@ public class TestArrayDequeEC {
         Integer stuRMVaule=stuAD.removeLast();
         Integer adRMVaule=AD.removeLast();
          wrongMsg.append("removeLast()\n");
-        assertEquals(wrongMsg.toString(),stuRMVaule, adRMVaule);
+        assertEquals(wrongMsg.toString(),adRMVaule, stuRMVaule);
     }
 
     public void testGet(StudentArrayDeque<Integer> stuAD,ArrayDequeSolution<Integer> AD,
@@ -50,7 +50,7 @@ public class TestArrayDequeEC {
         Integer adGetNum=AD.get(getIndex);
         wrongMsg.append("get()\n");
         assertEquals(wrongMsg.toString(),
-                stuGetNum,adGetNum);
+                adGetNum,stuGetNum);
     }
     @Test
     public void randomizedTest(){
