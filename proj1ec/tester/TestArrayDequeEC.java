@@ -12,7 +12,7 @@ public class TestArrayDequeEC {
         int addNum=StdRandom.uniform(0, 500);
         stuAD.addFirst(addNum);
         AD.addFirst(addNum);
-        wrongMsg.append("addLast(").append(addNum).append(")\n");;
+        wrongMsg.append("addFirst(").append(addNum).append(")\n");;
         assertEquals(wrongMsg.toString(),
                 AD.size(),stuAD.size());
     }
@@ -30,7 +30,7 @@ public class TestArrayDequeEC {
                                 StringBuilder wrongMsg){
         Integer stuRMVaule=stuAD.removeFirst();
         Integer adRMVaule=AD.removeFirst();
-        wrongMsg.append("RemoveFirst()\n");
+        wrongMsg.append("removeFirst()\n");
         assertEquals(wrongMsg.toString(),
                 adRMVaule,stuRMVaule);
     }
@@ -48,7 +48,7 @@ public class TestArrayDequeEC {
         int getIndex=StdRandom.uniform(0, AD.size());
         Integer stuGetNum=stuAD.get(getIndex);
         Integer adGetNum=AD.get(getIndex);
-        wrongMsg.append("get()\n");
+        wrongMsg.append("get(").append(getIndex).append(")\n");
         assertEquals(wrongMsg.toString(),
                 adGetNum,stuGetNum);
     }
