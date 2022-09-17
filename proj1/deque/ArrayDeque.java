@@ -19,7 +19,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addFirst(T x) {
         if (firstIndex == 0) {
-            this.resize();
+            this.resize((int)(p.length*1.6));
         }
         p[firstIndex - 1] = x;
         firstIndex--;
@@ -27,39 +27,29 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     @Override
-    /** Inserts X into the back of the list. */
     public void addLast(T x) {
         if (size == p.length - firstIndex) {
-            this.resize();
+            this.resize((int)(p.length*1.6));
         }
         p[size + firstIndex] = x;
         size++;
     }
 
-    /**
-     * Returns the item from the back of the list.
-     */
-    private T getLast() {
+    public T getLast() {
         return p[size - 1 + firstIndex];
     }
 
-    /**
-     * Gets the ith item in the list (0 is the front).
-     */
     @Override
     public T get(int i) {
         return p[i + firstIndex];
     }
 
-    /**
-     * Returns the number of items in the list.
-     */
     @Override
     public int size() {
         return size;
     }
 
-    private T getFirst() {
+    public T getFirst() {
         if (size() == 0) {
             return null;
         }
@@ -71,9 +61,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size() == 0) {
             return null;
         }
-        usage_Ratio = (double) size / p.length;
-        if (usage_Ratio <= 0.25 && size() > 4) {
-            resizeToHalf();
+        if (getUsageRatio() <= 0.25 && size() > 4) {
+            resize(p.length/2);
         }
         T temp = this.getFirst();
         p[firstIndex] = null;     //if the stored stuff is big,then we set its reference to null,
@@ -83,18 +72,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return temp;
     }
 
-    /**
-     * Deletes item from back of the list and
-     * returns deleted item.
-     */
     @Override
     public T removeLast() {
         if (size() == 0) {
             return null;
         }
-        usage_Ratio = (double) size / p.length;
-        if (usage_Ratio <= 0.25 && size() > 4) {
-            resizeToHalf();
+        if (getUsageRatio() <= 0.25 && size() > 4) {
+            resize(p.length/2);
         }
         T temp = this.getLast();
         p[firstIndex + size - 1] = null;   //if the stored stuff is big,then we set its reference to null,so we can save memory
@@ -102,24 +86,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return temp;
     }
 
-    private void resize() {
-        T[] a = (T[]) new Object[p.length * 2];    //resize by multiplying the number of boxes by 2.
+    private void resize(int Size) {
+        T[] a = (T[]) new Object[Size];    //resize by multiplying the number of boxes by 2.
         // which can be quite fast when add millions numbers;
         System.arraycopy(p, firstIndex, a, a.length / 4, size);
         firstIndex = a.length / 4;
         p = a;
     }
 
-    /**
-     * In order to save memory,when memory usage ratio is less than 0.25,
-     * change array's length to it's half.
-     */
-    private void resizeToHalf() {
-        T[] a = (T[]) new Object[p.length / 2];
-        System.arraycopy(p, firstIndex, a, a.length / 4, size);
-        firstIndex = a.length / 4;
-        p = a;
-    }
 
     @Override
     public void printDeque() {
@@ -128,27 +102,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
-    /**
-     * Returns an iterator over elements of type {@code Type}.
-     *
-     * @return an Iterator.
-     */
     @Override
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof deque.Deque<?>)) {
+        if (!(o instanceof deque.Deque<?>)||this.size() != ((Deque<T>)o).size()) {
             return false;
         }
         if (this == o) {
             return true;
         }
         Deque<T> other = (Deque<T>) o;
-        if (this.size() != other.size()) {
-            return false;
-        }
         int i = 0;
         for (; i < this.size(); i++) {
             if (!this.get(i).equals(other.get(i))) {
@@ -156,6 +122,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
         }
         return i == this.size();
+    }
+
+    public double getUsageRatio() {
+        usage_Ratio=(double) size/p.length;
+        return usage_Ratio;
     }
 
     private class ArrayDequeIterator implements Iterator<T> {

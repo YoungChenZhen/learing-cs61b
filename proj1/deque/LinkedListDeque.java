@@ -76,11 +76,11 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return p.item;
     }
 
-    private T getFirst() {
+    public T getFirst() {
         return sentinel.next.item;
     }
 
-    private T getLast() {
+    public T getLast() {
         return sentinel.prev.item;
     }
 
