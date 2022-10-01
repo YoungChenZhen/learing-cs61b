@@ -8,6 +8,7 @@ import java.util.Set;
  */
 public interface Map61B<K, V> extends Iterable<K> {
 
+    void printInOrder();
     /** Removes all of the mappings from this map. */
     void clear();
 

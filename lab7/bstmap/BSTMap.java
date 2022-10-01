@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
-    int size;
-    BSTNode root;
+    private int size;
+    private BSTNode root;
 
     public BSTMap() {
         root = null;
@@ -24,7 +24,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        NullArgumentException(key);
         return containsKeyHelper(key, root);
     }
 
@@ -67,6 +66,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private void NullArgumentException(K key) {
         if (key == null)
             throw new NullArgumentException();
+    }
+
+    public void printInOrder(){
+        for(K key:this){
+            System.out.print(key+" ");
+        }
     }
 
     @Override
