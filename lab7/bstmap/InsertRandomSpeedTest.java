@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import edu.princeton.cs.algs4.Stopwatch;
 
+import static java.lang.Integer.valueOf;
+
 /** Performs a timing test on three different set implementations.
  *  @author Josh Hug
  *  @author Brendan Hu
@@ -47,7 +49,7 @@ public class InsertRandomSpeedTest {
         String s = "cat";
         for (int i = 0; i < N; i++) {
             s = StringUtils.randomString(L);
-            map61B.put(s, new Integer(i));
+            map61B.put(s, i);
         }
         return sw.elapsedTime();
     }
@@ -59,7 +61,7 @@ public class InsertRandomSpeedTest {
         String s = "cat";
         for (int i = 0; i < N; i++) {
             s = StringUtils.randomString(L);
-            treeMap.put(s, new Integer(i));
+            treeMap.put(s, i);
         }
         return sw.elapsedTime();
     }
@@ -71,7 +73,7 @@ public class InsertRandomSpeedTest {
         String s = "cat";
         for (int i = 0; i < N; i++) {
             s = StringUtils.randomString(L);
-            treeMap.put(s, new Integer(i));
+            treeMap.put(s,i);
         }
         return sw.elapsedTime();
     }
